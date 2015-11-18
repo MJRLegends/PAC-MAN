@@ -70,8 +70,8 @@ var buttonObject = {
 	textOffsetY: 0,
 };
 
-//Map Layout 0: Blank space, 1: Wall, 2: Small white dot, 3: Big white dot, 4: Spawn Box Door
-var mapGrid = 
+// Level 1
+var mapGrid = //Map Layout 0: Blank space, 1: Wall, 2: Small white dot, 3: Big white dot, 4: Spawn Box Door
 [								//M
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 3, 1, 0,
@@ -95,7 +95,9 @@ var mapGrid =
 	0, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0
 ];
-var mapGrid2 = 
+
+//Level 2
+var mapGrid2 = //Map Layout 0: Blank space, 1: Wall, 2: Small white dot, 3: Big white dot, 4: Spawn Box Door
 [								//M
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 3, 1, 0,
@@ -160,6 +162,7 @@ var currentScreen = "mainMenu"; // Used store the current screen
 var playerState; // Used to store the player state/direction
 var playerAnimationDelay; // Used to store the player Animation Delay
 var spriteEatDelay; // Used to store the delay of the enemies turning blue/eat mode
+var round = 1;
 
 //Event listeners
 window.addEventListener("keydown", function(event) {
@@ -281,6 +284,7 @@ function update(){ // Update Method
 				spriteEatDelay = 300;
 				loadSprites();
 				loadMap(1);
+				round = 1;
 			} 
 			else {		
 				enemySpriteMovement();
@@ -375,10 +379,12 @@ function update(){ // Update Method
 					loadSprites();
 					if(score % 160 == 0){
 						loadMap(2);
+						round++;
 					}
 					else if(score % 315 == 0){
 						loadMap(1);
 						score = 0;
+						round = 1;
 					}
 					if (highestscore < score)
 						highestscore = score;
@@ -831,8 +837,9 @@ function render() { // Main Render method
 		drawingSurface.shadowBlur = 2;
 		drawingSurface.shadowColor="#FFFFFF";
 		drawingSurface.font = "25px Verdana";
-		drawingSurface.fillText("Score : " + score, 15, 25);
-		drawingSurface.fillText("Highest Score : " + highestscore, 200, 25);
+		drawingSurface.fillText("Round : " + round, 15, 25);
+		drawingSurface.fillText("Score : " + score, canvas.width - 170, 25);
+		drawingSurface.fillText("Highest Score : " + highestscore, 15, canvas.height - 25);
 		drawingSurface.fillText("FPS : " + fps.getFPS(), canvas.width - 150, canvas.height - 25);
 		
 		//Paused Text/Buttons
